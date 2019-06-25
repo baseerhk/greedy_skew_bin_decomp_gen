@@ -18,6 +18,8 @@ object Tests extends Properties("gsbd"){
 
     import Math._
 
+
+    property("sum") = forAll(Gen.choose(0, 2048)) { n => gsbd(n).sum == n}
     property("uniqueness") = forAll(pairs) { p => p._1 != p._2}
     property("max_size") = forAll(num_size_pairs) { p => p._2 <= ceil(log(p._1 + 1) / log(2)).toInt}
 
