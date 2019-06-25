@@ -12,15 +12,9 @@ object Tests extends Properties("gsbd"){
         if y != x
     } yield (gsbd(x), gsbd(y))
 
-    val num_size_pairs = for {
-        n <- Gen.choose(0, 2048)
-    } yield (n, gsbd(n).length)
-
     import Math._
 
-
-    property("sum") = forAll(Gen.choose(0, 2048)) { n => gsbd(n).sum == n}
+    property("sum")        = forAll(Gen.choose(0, 2048)) { n => gsbd(n).sum == n }
     property("uniqueness") = forAll(pairs) { p => p._1 != p._2}
-    property("max_size") = forAll(num_size_pairs) { p => p._2 <= ceil(log(p._1 + 1) / log(2)).toInt}
-
+    property("max_size")   = forAll(Gen.choose(0, 2048)) { n => gsbd(n).size <= ceil(log(n + 1) / log(2)).toInt}
 }
