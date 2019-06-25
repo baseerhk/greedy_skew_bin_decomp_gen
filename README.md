@@ -3,7 +3,7 @@ Greedy Skew-Binary Decomposition Generator in Scala
 
 Skew binary numbers find applications in skew binomial heaps, a variant of binomial heaps that support worst-case O(1) insertion, and in skew binary random access lists, a purely functional data structure. They also find use in bootstrapped skew binomial heaps, which have excellent asymptotic guarantees.
 
-If smoothsort is implemented using perfect binary trees (rather than the more common Leonardo trees), the heap is divided into trees which correspond to the digits of the skew binary representation of the heap size. [from Wikipedia](https://en.wikipedia.org/wiki/Skew_binary_number_system)
+If smoothsort is implemented using perfect binary trees (rather than the more common Leonardo trees), the heap is divided into trees which correspond to the digits of the skew binary representation of the heap size ([from Wikipedia](https://en.wikipedia.org/wiki/Skew_binary_number_system)).
 
 Usage Example:
 --------------
