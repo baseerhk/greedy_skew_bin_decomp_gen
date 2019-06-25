@@ -1,35 +1,35 @@
-A Scala Purely Functional Random Access List
-============================================
+Greedy Skew-Binary Decomposition Generator in Scala
+===================================================
 
-This is a Scala implementation of the _random access list purely functional data structure_, first presented by **Chris Okasaki**. See [here](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.55.5156&rep=rep1&type=pdf). For more information and code explaination, see [my article](https://medium.com/@baseerhk/a-purely-functional-random-access-list-in-scala-d316a7b9c108).
+Skew binary numbers find applications in skew binomial heaps, a variant of binomial heaps that support worst-case O(1) insertion, and in skew binary random access lists, a purely functional data structure. They also find use in bootstrapped skew binomial heaps, which have excellent asymptotic guarantees.
+
+If smoothsort is implemented using perfect binary trees (rather than the more common Leonardo trees), the heap is divided into trees which correspond to the digits of the skew binary representation of the heap size. [from Wikipedia](https://en.wikipedia.org/wiki/Skew_binary_number_system)
 
 Usage Example:
 --------------
 ```
-scala> import randomAccessList.RandomAccessList._
-import randomAccessList.RandomAccessList._
+scala> import greedySkewBinaryDecomposition.GSBD._
+import greedySkewBinaryDecomposition.GSBD._
 
-scala> val ral = fromList(List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'))
-ral: randomAccessList.RandomAccessList.RandomAccessList[Char] = List((Leaf(a),1), (Leaf(b),1), (Node(c,Leaf(d),Leaf(e)),3), (Node(f,Node(g,Leaf(h),Leaf(i)),Node(j,Leaf(k),Leaf(l))),7))
-scala> lookup(ral, 10)
-res1: Char = k
+scala> gsbd(0)
+res0: List[Int] = List()
 
-scala> update(ral, 10, 'K')
-res2: randomAccessList.RandomAccessList.RandomAccessList[Char] = List((Leaf(a),1), (Leaf(b),1), (Node(c,Leaf(d),Leaf(e)),3), (Node(f,Node(g,Leaf(h),Leaf(i)),Node(j,Leaf(K),Leaf(l))),7))
+scala> gsbd(1)
+res1: List[Int] = List(1)
 
-scala> ral
-res3: randomAccessList.RandomAccessList.RandomAccessList[Char] = List((Leaf(a),1), (Leaf(b),1), (Node(c,Leaf(d),Leaf(e)),3), (Node(f,Node(g,Leaf(h),Leaf(i)),Node(j,Leaf(k),Leaf(l))),7))
+scala> gsbd(2)
+res2: List[Int] = List(1, 1)
 
-scala> head(ral)
-res4: Char = a
+scala> gsbd(3)
+res3: List[Int] = List(3)
 
-scala> tail(ral)
-res5: randomAccessList.RandomAccessList.RandomAccessList[Char] = List((Leaf(b),1), (Node(c,Leaf(d),Leaf(e)),3), (Node(f,Node(g,Leaf(h),Leaf(i)),Node(j,Leaf(k),Leaf(l))),7))
+scala> gsbd(4)
+res4: List[Int] = List(1, 3)
 
-scala> cons(ral, 'z')
-res6: randomAccessList.RandomAccessList.RandomAccessList[Char] = List((Node(z,Leaf(a),Leaf(b)),3), (Node(c,Leaf(d),Leaf(e)),3), (Node(f,Node(g,Leaf(h),Leaf(i)),Node(j,Leaf(k),Leaf(l))),7))
+scala> gsbd(5)
+res5: List[Int] = List(1, 1, 3)
 
-scala> head(cons(ral, 'z'))
-res7: Char = z
+scala> gsbd(2051)
+res10: List[Int] = List(1, 3, 2047)
 ```
 
