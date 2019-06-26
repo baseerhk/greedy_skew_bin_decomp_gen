@@ -28,6 +28,11 @@ object Tests extends Properties("gsbd"){
         }
     } yield (n, gsbd(n))
 
+    val moreThanOneTerm = for {
+        n <- Gen.choose(0, 2048)
+        if gsbd(n).size > 1
+    } yield gsbd(n)
+
     import Math._
     // prop1: Sum of GSBD(n) = n
     property("prop1") = forAll(Gen.choose(0, 2048)) { n => gsbd(n).sum == n }
@@ -39,4 +44,17 @@ object Tests extends Properties("gsbd"){
     property("prop4") = forAll(lessThanTwoTermsOrNonEqualFirstTwoTermsPairs) { case (n, gn) => gsbd(n + 1) == 1::gn }
     // prop5: GSBD(n + 1) in terms of GSBD(n) when first two terms of GSBD(n) are equal
     property("prop5") = forAll(equalFirstTwoTermsPairs) { case (n, gn) => gsbd(n + 1) == (2 * gn(0) + 1)::gn.drop(2) }
+    // prop6: in GSBD(n), x(i) < x(i + 1) for all i, except for the first two terms, where x(1) <= x(2)
+    property("prop6") = forAll(moreThanOneTerm) { gn => 
+        val List(x, y) = gn.take(2)
+        if (x > y) false else {
+            def inner(xs: List[Int]): Boolean = {
+                if (xs.size < 2) true else {
+                    val List(a, b) = xs.take(2)
+                    if (a >= b) false else inner(xs.drop(1))
+                }
+            }
+            inner(gn.drop(1))
+        }
+    }
 }
